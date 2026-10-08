@@ -59,3 +59,27 @@
 .fc-timegrid-cols {
   overflow: visible !important;
 }
+/* Corrección de altura y responsive para Safari y navegadores móviles */
+.fc {
+  min-height: 550px !important;
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .fc .fc-toolbar {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  .fc .fc-toolbar-title {
+    font-size: 1.1rem !important;
+  }
+  .fc .fc-timegrid-axis,
+  .fc .fc-timegrid-slot-label,
+  .fc col.fc-timegrid-axis {
+    width: 80px !important;
+    min-width: 80px !important;
+  }
+  .fc .fc-timegrid-now-indicator-arrow {
+    left: 10px !important;
+  }
+}
