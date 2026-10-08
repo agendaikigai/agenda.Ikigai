@@ -470,104 +470,104 @@ export default function Home() {
 
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', padding: '1.25rem' }}>
-   <style jsx global>{`
-  /* Forzar ancho de 110px en la columna completa del tiempo (incluyendo la etiqueta <col>) */
-  .fc .fc-timegrid-axis,
-  .fc .fc-timegrid-slot-label,
-  .fc col.fc-timegrid-axis,
-  .fc .fc-timegrid-axis-frame,
-  .fc .fc-timegrid-slot-label-frame {
-    width: 110px !important;
-    min-width: 110px !important;
-    max-width: 110px !important;
-    box-sizing: border-box !important;
-  }
+      <style jsx global>{`
+        /* Forzar ancho de 110px en la columna completa del tiempo */
+        .fc .fc-timegrid-axis,
+        .fc .fc-timegrid-slot-label,
+        .fc col.fc-timegrid-axis,
+        .fc .fc-timegrid-axis-frame,
+        .fc .fc-timegrid-slot-label-frame {
+          width: 110px !important;
+          min-width: 110px !important;
+          max-width: 110px !important;
+          box-sizing: border-box !important;
+        }
 
-  .fc .fc-timegrid-axis,
-  .fc .fc-timegrid-slot-label {
-    background-color: #f7fee7 !important; /* Verde menta super clarito */
-    border-right: 2px solid #e9d5ff !important; /* Divisor morado claro */
-  }
+        .fc .fc-timegrid-axis,
+        .fc .fc-timegrid-slot-label {
+          background-color: #f7fee7 !important; /* Verde menta clarito */
+          border-right: 2px solid #e9d5ff !important; /* Divisor morado claro */
+        }
 
-  .fc .fc-timegrid-slot-label-frame {
-    text-align: left !important;
-    padding-left: 12px !important;
-    font-weight: 700 !important;
-    font-size: 0.88rem !important;
-    color: #581c87 !important;
-  }
+        .fc .fc-timegrid-slot-label-frame {
+          text-align: left !important;
+          padding-left: 12px !important;
+          font-weight: 700 !important;
+          font-size: 0.88rem !important;
+          color: #581c87 !important;
+        }
 
-  /* Desbloquear desbordamiento visual para el elemento flotante */
-  .fc .fc-timegrid,
-  .fc .fc-timegrid-body,
-  .fc .fc-timegrid-cols,
-  .fc .fc-timegrid-slots,
-  .fc .fc-scroller {
-    overflow: visible !important;
-  }
+        /* Desbloquear desbordamiento visual para elementos flotantes */
+        .fc .fc-timegrid,
+        .fc .fc-timegrid-body,
+        .fc .fc-timegrid-cols,
+        .fc .fc-timegrid-slots,
+        .fc .fc-scroller {
+          overflow: visible !important;
+        }
 
-  .fc .fc-v-event {
-    border-radius: 10px !important;
-    border: none !important;
-    box-shadow: 0 4px 8px -2px rgba(139, 92, 246, 0.2) !important;
-    padding: 6px 8px !important;
-  }
+        .fc .fc-v-event {
+          border-radius: 10px !important;
+          border: none !important;
+          box-shadow: 0 4px 8px -2px rgba(139, 92, 246, 0.2) !important;
+          padding: 6px 8px !important;
+        }
 
-  /* Óvalo indicador de hora actual totalmente visible y flotante */
-  .fc .fc-timegrid-now-indicator-arrow {
-    position: absolute !important;
-    margin-top: -12px !important;
-    left: 36px !important; /* Ubicado a la derecha de las horas (9-17) sin solaparse */
-    border: 1.5px solid #7c3aed !important;
-    background-color: #7c3aed !important;
-    color: #ffffff !important;
-    font-size: 0.72rem !important;
-    font-weight: 800 !important;
-    padding: 2px 8px !important;
-    border-radius: 9999px !important;
-    z-index: 9999 !important; /* Flotante por encima de la cuadrícula */
-    box-shadow: 0 3px 8px rgba(124, 58, 237, 0.4) !important;
-    white-space: nowrap !important;
-    display: block !important;
-    visibility: visible !important;
-  }
+        /* Óvalo indicador de hora actual totalmente visible y flotante */
+        .fc .fc-timegrid-now-indicator-arrow {
+          position: absolute !important;
+          margin-top: -12px !important;
+          left: 36px !important;
+          border: 1.5px solid #7c3aed !important;
+          background-color: #7c3aed !important;
+          color: #ffffff !important;
+          font-size: 0.72rem !important;
+          font-weight: 800 !important;
+          padding: 2px 8px !important;
+          border-radius: 9999px !important;
+          z-index: 9999 !important;
+          box-shadow: 0 3px 8px rgba(124, 58, 237, 0.4) !important;
+          white-space: nowrap !important;
+          display: block !important;
+          visibility: visible !important;
+        }
 
-  /* Línea morada que recorre el día en curso */
-  .fc .fc-timegrid-now-indicator-line {
-    border-color: #8b5cf6 !important;
-    border-width: 2px 0 0 0 !important;
-    z-index: 9998 !important;
-  }
+        /* Línea morada que recorre el día en curso */
+        .fc .fc-timegrid-now-indicator-line {
+          border-color: #8b5cf6 !important;
+          border-width: 2px 0 0 0 !important;
+          z-index: 9998 !important;
+        }
 
-  /* Botones de navegación */
-  .fc .fc-button-primary {
-    background-color: #f3e8ff !important;
-    border-color: #e9d5ff !important;
-    color: #6b21a8 !important;
-    font-weight: 700 !important;
-    border-radius: 10px !important;
-    box-shadow: none !important;
-  }
+        /* Botones de navegación */
+        .fc .fc-button-primary {
+          background-color: #f3e8ff !important;
+          border-color: #e9d5ff !important;
+          color: #6b21a8 !important;
+          font-weight: 700 !important;
+          border-radius: 10px !important;
+          box-shadow: none !important;
+        }
 
-  .fc .fc-button-primary:hover {
-    background-color: #e9d5ff !important;
-    color: #581c87 !important;
-  }
+        .fc .fc-button-primary:hover {
+          background-color: #e9d5ff !important;
+          color: #581c87 !important;
+        }
 
-  .fc .fc-button-active {
-    background-color: #8b5cf6 !important;
-    border-color: #8b5cf6 !important;
-    color: #ffffff !important;
-  }
+        .fc .fc-button-active {
+          background-color: #8b5cf6 !important;
+          border-color: #8b5cf6 !important;
+          color: #ffffff !important;
+        }
 
-  .fc-theme-standard td, .fc-theme-standard th {
-    border-color: #f3e8ff !important;
-  }
+        .fc-theme-standard td, .fc-theme-standard th {
+          border-color: #f3e8ff !important;
+        }
 
-  .fc-timegrid-slot {
-    cursor: pointer;
-  }
-`}</style>
+        .fc-timegrid-slot {
+          cursor: pointer;
+        }
+      `}</style>
 
       <div style={{ maxWidth: '1220px', margin: '0 auto', backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '1.25rem', boxShadow: '0 4px 20px -2px rgba(139, 92, 246, 0.08)', border: '1px solid #f3e8ff' }}>
         
@@ -694,54 +694,57 @@ export default function Home() {
         {/* Calendario */}
         <div style={{ width: '100%', overflowX: 'auto' }}>
           <FullCalendar
-  plugins={[timeGridPlugin, interactionPlugin]}
-  initialView="timeGridWeek"
-  locale={esLocale}
-  nowIndicator={true}
-  now={new Date()}
-  selectable={true}
-  dateClick={handleDateClick}
-  eventClick={handleEventClick}
-  /* Renderiza el texto dinámico dentro del óvalo flotante de la hora actual */
-  nowIndicatorContent={(args: any) => {
-    const date = args.date || new Date();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const hours12 = hours % 12 === 0 ? 12 : hours % 12;
-    const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    return `${hours12}:${minutesFormatted} ${ampm}`;
-  }}
-  height="auto"
-  headerToolbar={{
-    left: 'prev,next today',
-    center: 'title',
-    right: 'timeGridDay,timeGridWeek'
-  }}
-  buttonText={{
-    today: 'Hoy',
-    timeGridDay: 'Día',
-    timeGridWeek: 'Semana'
-  }}
-  slotMinTime="09:00:00"
-  slotMaxTime="18:00:00"
-  allDaySlot={false}
-  events={eventsFiltrados}
-  eventContent={(eventInfo: any) => {
-    const { cliente, servicio, horaInicioStr, horaFinStr } = eventInfo.event.extendedProps;
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-start', color: eventInfo.event.textColor }}>
-        <div style={{ fontSize: '0.72rem', fontWeight: 'bold', opacity: 0.9 }}>
-          {horaInicioStr} - {horaFinStr}
-        </div>
-        <div style={{ fontSize: '0.85rem', fontWeight: '800', margin: '2px 0 1px 0', lineHeight: '1.1' }}>
-          {cliente}
-        </div>
-        <div style={{ fontSize: '0.73rem', fontWeight: '600', textTransform: 'uppercase', opacity: 0.95 }}>
-          {servicio}
+            plugins={[timeGridPlugin, interactionPlugin]}
+            initialView="timeGridWeek"
+            locale={esLocale}
+            nowIndicator={true}
+            now={new Date()}
+            selectable={true}
+            dateClick={handleDateClick}
+            eventClick={handleEventClick}
+            nowIndicatorContent={(args: any) => {
+              const date = args.date || new Date();
+              const hours = date.getHours();
+              const minutes = date.getMinutes();
+              const hours12 = hours % 12 === 0 ? 12 : hours % 12;
+              const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
+              const ampm = hours >= 12 ? 'PM' : 'AM';
+              return `${hours12}:${minutesFormatted} ${ampm}`;
+            }}
+            height="auto"
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'timeGridDay,timeGridWeek'
+            }}
+            buttonText={{
+              today: 'Hoy',
+              timeGridDay: 'Día',
+              timeGridWeek: 'Semana'
+            }}
+            slotMinTime="09:00:00"
+            slotMaxTime="18:00:00"
+            allDaySlot={false}
+            events={eventsFiltrados}
+            eventContent={(eventInfo: any) => {
+              const { cliente, servicio, horaInicioStr, horaFinStr } = eventInfo.event.extendedProps;
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-start', color: eventInfo.event.textColor }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 'bold', opacity: 0.9 }}>
+                    {horaInicioStr} - {horaFinStr}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: '800', margin: '2px 0 1px 0', lineHeight: '1.1' }}>
+                    {cliente}
+                  </div>
+                  <div style={{ fontSize: '0.73rem', fontWeight: '600', textTransform: 'uppercase', opacity: 0.95 }}>
+                    {servicio}
+                  </div>
+                </div>
+              );
+            }}
+          />
         </div>
       </div>
-
 
       {/* MODAL CREAR CITA PÚBLICO */}
       {modalOpen && (
