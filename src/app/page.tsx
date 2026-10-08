@@ -741,9 +741,7 @@ export default function Home() {
           {servicio}
         </div>
       </div>
-    );
-  }}
-/>
+
 
       {/* MODAL CREAR CITA PÚBLICO */}
       {modalOpen && (
