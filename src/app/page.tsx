@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -14,9 +13,9 @@ import ReporteSemanalModal from '@/components/ReporteSemanalModal';
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false });
 
 const COLORES_PREDEFINIDOS = [
-  { bg: '#eab308', border: '#ca8a04', text: '#1e293b' }, // Amarillo
+  { bg: '#c084fc', border: '#9333ea', text: '#ffffff' }, // Morado Ikigai
   { bg: '#3b82f6', border: '#1d4ed8', text: '#ffffff' }, // Azul
-  { bg: '#a855f7', border: '#7e22ce', text: '#ffffff' }, // Morado
+  { bg: '#eab308', border: '#ca8a04', text: '#1e293b' }, // Amarillo
   { bg: '#f97316', border: '#c2410c', text: '#ffffff' }, // Naranja
   { bg: '#ec4899', border: '#be185d', text: '#ffffff' }, // Rosado
   { bg: '#84cc16', border: '#4d7c0f', text: '#ffffff' }, // Verde
@@ -472,10 +471,11 @@ export default function Home() {
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc', padding: '1rem' }}>
       <style jsx global>{`
+        /* Ancho ampliado de la columna de tiempo */
         .fc .fc-timegrid-axis,
         .fc .fc-timegrid-slot-label {
-          width: 70px !important;
-          min-width: 70px !important;
+          width: 100px !important;
+          min-width: 100px !important;
           overflow: visible !important;
         }
 
@@ -486,23 +486,24 @@ export default function Home() {
           padding: 6px 8px !important;
         }
 
+        /* Indicador de hora actual adaptado a colores Ikigai */
         .fc .fc-timegrid-now-indicator-arrow {
           margin-top: -12px !important;
           left: 2px !important;
-          border: 1.5px solid #dc2626 !important;
+          border: 1.5px solid #a855f7 !important;
           background-color: #ffffff !important;
-          color: #dc2626 !important;
+          color: #9333ea !important;
           font-size: 0.72rem !important;
           font-weight: 700 !important;
-          padding: 2px 6px !important;
+          padding: 2px 8px !important;
           border-radius: 9999px !important;
           z-index: 30 !important;
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 1px 4px rgba(147, 51, 234, 0.25);
           white-space: nowrap !important;
         }
 
         .fc .fc-timegrid-now-indicator-line {
-          border-color: #ef4444 !important;
+          border-color: #a855f7 !important;
           border-width: 2px 0 0 0 !important;
           z-index: 20 !important;
           left: 0 !important;
@@ -615,15 +616,14 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Header Agenda Ikigai con Logo */}
+        {/* Header Agenda Ikigai con Logo mejorado */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ position: 'relative', width: '56px', height: '56px', borderRadius: '50%', overflow: 'hidden', border: '1px solid #e2e8f0', flexShrink: 0 }}>
-              <Image
-                src="/logo-ikigai.jpeg"
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', overflow: 'hidden', border: '1px solid #e2e8f0', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+              <img
+                src="/logoIKIGAI.jpeg"
                 alt="Ikigai Logo"
-                fill
-                style={{ objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>
             <div>
@@ -636,7 +636,7 @@ export default function Home() {
 
           <button
             onClick={handleAbrirModalCita}
-            style={{ backgroundColor: '#65a30d', color: '#ffffff', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600, cursor: 'pointer', border: 'none' }}
+            style={{ backgroundColor: '#a855f7', color: '#ffffff', padding: '0.5.rem 1rem', borderRadius: '0.5rem', fontWeight: 600, cursor: 'pointer', border: 'none', transition: 'background-color 0.2s' }}
           >
             + Nueva Cita
           </button>
@@ -788,7 +788,7 @@ export default function Home() {
                 </button>
                 <button
                   type="submit"
-                  style={{ padding: '0.5rem 0.75rem', backgroundColor: '#65a30d', color: '#ffffff', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}
+                  style={{ padding: '0.5rem 0.75rem', backgroundColor: '#a855f7', color: '#ffffff', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}
                 >
                   Confirmar Cita
                 </button>
@@ -861,19 +861,19 @@ export default function Home() {
                 <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '2px solid #e5e7eb', marginBottom: '1rem' }}>
                   <button
                     onClick={() => setAdminTab('citas')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'citas' ? '3px solid #65a30d' : 'transparent', color: adminTab === 'citas' ? '#65a30d' : '#4b5563' }}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'citas' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'citas' ? '#a855f7' : '#4b5563' }}
                   >
                     📅 Citas ({citasFiltradas.length})
                   </button>
                   <button
                     onClick={() => setAdminTab('especialistas')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'especialistas' ? '3px solid #65a30d' : 'transparent', color: adminTab === 'especialistas' ? '#65a30d' : '#4b5563' }}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'especialistas' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'especialistas' ? '#a855f7' : '#4b5563' }}
                   >
                     💅 Especialistas ({especialistas.length})
                   </button>
                   <button
                     onClick={() => setAdminTab('servicios')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'servicios' ? '3px solid #65a30d' : 'transparent', color: adminTab === 'servicios' ? '#65a30d' : '#4b5563' }}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'servicios' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'servicios' ? '#a855f7' : '#4b5563' }}
                   >
                     ✨ Servicios ({servicios.length})
                   </button>
@@ -1023,7 +1023,7 @@ export default function Home() {
                       />
                       <button
                         type="submit"
-                        style={{ padding: '0.5rem 1rem', backgroundColor: '#65a30d', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
+                        style={{ padding: '0.5rem 1rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
                       >
                         + Agregar
                       </button>
@@ -1087,7 +1087,7 @@ export default function Home() {
                       />
                       <button
                         type="submit"
-                        style={{ padding: '0.5rem 1rem', backgroundColor: '#65a30d', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
+                        style={{ padding: '0.5rem 1rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
                       >
                         + Agregar
                       </button>
