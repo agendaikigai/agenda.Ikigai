@@ -160,22 +160,6 @@ export default function Home() {
     }
   }, [mounted, fetchData]);
 
-  if (!mounted) {
-    return (
-      <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#7c3aed', fontWeight: 600 }}>Cargando Agenda Ikigai...</p>
-      </main>
-    );
-  }
-
-  // Resto del código del componente (métodos y JSX idénticos)...
-  return (
-    <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', padding: '1.25rem' }}>
-      {/* ... Mismo JSX que el código previo ... */}
-    </main>
-  );
-}
-
   // Login Admin
   const handleAdminAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -487,10 +471,18 @@ export default function Home() {
     ? citasList.filter((c) => c.manicurista_nombre.toLowerCase() === especialistaSeleccionada.toLowerCase())
     : citasList;
 
+  if (!mounted) {
+    return (
+      <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#7c3aed', fontWeight: 600 }}>Cargando Agenda Ikigai...</p>
+      </main>
+    );
+  }
+
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', padding: '1.25rem' }}>
       <style jsx global>{`
-        /* Forzar ancho de 110px en la columna completa del tiempo */
+        /* Forzar ancho en la columna completa del tiempo */
         .fc .fc-timegrid-axis,
         .fc .fc-timegrid-slot-label,
         .fc col.fc-timegrid-axis,
@@ -505,7 +497,7 @@ export default function Home() {
         .fc .fc-timegrid-axis,
         .fc .fc-timegrid-slot-label {
           background-color: #f7fee7 !important; /* Verde menta clarito */
-          border-right: 2px solid #e9d5ff !important; /* Divisor morado claro */
+          border-right: 2px solid #e9d5ff !important;
         }
 
         .fc .fc-timegrid-slot-label-frame {
@@ -585,6 +577,31 @@ export default function Home() {
 
         .fc-timegrid-slot {
           cursor: pointer;
+        }
+
+        /* Reglas Responsive específicas para Safari y Chrome móvil */
+        .fc {
+          min-height: 550px !important;
+          width: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+          .fc .fc-toolbar {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+          }
+          .fc .fc-toolbar-title {
+            font-size: 1.1rem !important;
+          }
+          .fc .fc-timegrid-axis,
+          .fc .fc-timegrid-slot-label,
+          .fc col.fc-timegrid-axis {
+            width: 80px !important;
+            min-width: 80px !important;
+          }
+          .fc .fc-timegrid-now-indicator-arrow {
+            left: 10px !important;
+          }
         }
       `}</style>
 
@@ -710,64 +727,65 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Calendario adaptado a móviles */}
-<div style={{ width: '100%', minHeight: '600px', position: 'relative' }}>
-  <FullCalendar
-    plugins={[timeGridPlugin, interactionPlugin]}
-    initialView={typeof window !== 'undefined' && window.innerWidth < 768 ? 'timeGridDay' : 'timeGridWeek'}
-    locale={esLocale}
-    nowIndicator={true}
-    now={new Date()}
-    selectable={true}
-    dateClick={handleDateClick}
-    eventClick={handleEventClick}
-    nowIndicatorContent={(args: any) => {
-      const date = args.date || new Date();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const hours12 = hours % 12 === 0 ? 12 : hours % 12;
-      const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      return `${hours12}:${minutesFormatted} ${ampm}`;
-    }}
-    height="auto"
-    contentHeight="auto"
-    headerToolbar={{
-      left: 'prev,next today',
-      center: 'title',
-      right: 'timeGridDay,timeGridWeek'
-    }}
-    buttonText={{
-      today: 'Hoy',
-      timeGridDay: 'Día',
-      timeGridWeek: 'Semana'
-    }}
-    slotMinTime="09:00:00"
-    slotMaxTime="18:00:00"
-    allDaySlot={false}
-    events={eventsFiltrados}
-    eventContent={(eventInfo: any) => {
-      const { cliente, servicio, horaInicioStr, horaFinStr } = eventInfo.event.extendedProps;
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-start', color: eventInfo.event.textColor }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 'bold', opacity: 0.9 }}>
-            {horaInicioStr} - {horaFinStr}
-          </div>
-          <div style={{ fontSize: '0.85rem', fontWeight: '800', margin: '2px 0 1px 0', lineHeight: '1.1' }}>
-            {cliente}
-          </div>
-          <div style={{ fontSize: '0.73rem', fontWeight: '600', textTransform: 'uppercase', opacity: 0.95 }}>
-            {servicio}
-          </div>
+        {/* Calendario adaptado a móviles y escritorio */}
+        <div style={{ width: '100%', minHeight: '600px', position: 'relative' }}>
+          <FullCalendar
+            plugins={[timeGridPlugin, interactionPlugin]}
+            initialView={typeof window !== 'undefined' && window.innerWidth < 768 ? 'timeGridDay' : 'timeGridWeek'}
+            locale={esLocale}
+            nowIndicator={true}
+            now={new Date()}
+            selectable={true}
+            dateClick={handleDateClick}
+            eventClick={handleEventClick}
+            nowIndicatorContent={(args: any) => {
+              const date = args.date || new Date();
+              const hours = date.getHours();
+              const minutes = date.getMinutes();
+              const hours12 = hours % 12 === 0 ? 12 : hours % 12;
+              const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
+              const ampm = hours >= 12 ? 'PM' : 'AM';
+              return `${hours12}:${minutesFormatted} ${ampm}`;
+            }}
+            height="auto"
+            contentHeight="auto"
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'timeGridDay,timeGridWeek'
+            }}
+            buttonText={{
+              today: 'Hoy',
+              timeGridDay: 'Día',
+              timeGridWeek: 'Semana'
+            }}
+            slotMinTime="09:00:00"
+            slotMaxTime="18:00:00"
+            allDaySlot={false}
+            events={eventsFiltrados}
+            eventContent={(eventInfo: any) => {
+              const { cliente, servicio, horaInicioStr, horaFinStr } = eventInfo.event.extendedProps;
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-start', color: eventInfo.event.textColor }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 'bold', opacity: 0.9 }}>
+                    {horaInicioStr} - {horaFinStr}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: '800', margin: '2px 0 1px 0', lineHeight: '1.1' }}>
+                    {cliente}
+                  </div>
+                  <div style={{ fontSize: '0.73rem', fontWeight: '600', textTransform: 'uppercase', opacity: 0.95 }}>
+                    {servicio}
+                  </div>
+                </div>
+              );
+            }}
+          />
         </div>
-      );
-    }}
-  />
-</div>
+
         {/* Pie de Página */}
         <footer style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #f3e8ff', textAlign: 'center', fontSize: '0.8rem', color: '#7c3aed', opacity: 0.8, fontWeight: 500 }}>
-           <p>© 2026 Agenda Ikigai. Todos los derechos reservados.</p>
-      <p>Creador de la Web, Ruben Abinazar Figarella.</p>
+          <p style={{ margin: '0 0 0.25rem 0' }}>© 2026 Agenda Ikigai. Todos los derechos reservados.</p>
+          <p style={{ margin: 0 }}>Creador de la Web: Ruben Abinazar Figarella.</p>
         </footer>
 
       </div>
