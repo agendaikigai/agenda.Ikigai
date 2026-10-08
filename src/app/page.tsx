@@ -13,12 +13,12 @@ import ReporteSemanalModal from '@/components/ReporteSemanalModal';
 const FullCalendar = dynamic(() => import('@fullcalendar/react'), { ssr: false });
 
 const COLORES_PREDEFINIDOS = [
-  { bg: '#c084fc', border: '#9333ea', text: '#ffffff' }, // Morado Ikigai
-  { bg: '#3b82f6', border: '#1d4ed8', text: '#ffffff' }, // Azul
-  { bg: '#eab308', border: '#ca8a04', text: '#1e293b' }, // Amarillo
-  { bg: '#f97316', border: '#c2410c', text: '#ffffff' }, // Naranja
-  { bg: '#ec4899', border: '#be185d', text: '#ffffff' }, // Rosado
-  { bg: '#84cc16', border: '#4d7c0f', text: '#ffffff' }, // Verde
+  { bg: '#d8b4fe', border: '#a855f7', text: '#3b0764' }, // Lilas suaves Ikigai
+  { bg: '#fbcfe8', border: '#f43f5e', text: '#881337' }, // Rosado suave
+  { bg: '#bae6fd', border: '#0284c7', text: '#0c4a6e' }, // Azul pastel
+  { bg: '#fef08a', border: '#eab308', text: '#713f12' }, // Amarillo pastel
+  { bg: '#bbf7d0', border: '#22c55e', text: '#14532d' }, // Verde menta
+  { bg: '#fed7aa', border: '#f97316', text: '#7c2d12' }, // Melocotón
 ];
 
 export default function Home() {
@@ -194,7 +194,7 @@ export default function Home() {
     const dateObj = new Date(year, month - 1, day);
     const dayOfWeek = dateObj.getDay();
 
-    if (dayOfWeek === 0 || dayOfWeek === 1) {
+    if (dayOfWeek === 0) {
       alert('⚠️ Solo se pueden agendar citas de Lunes a Sábado.');
       return false;
     }
@@ -469,46 +469,82 @@ export default function Home() {
     : citasList;
 
   return (
-    <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc', padding: '1rem' }}>
+    <main style={{ minHeight: '100vh', backgroundColor: '#faf5ff', padding: '1rem' }}>
       <style jsx global>{`
-        /* Ancho ampliado de la columna de tiempo */
+        /* Ancho expandido y alineado para el eje de horas */
         .fc .fc-timegrid-axis,
-        .fc .fc-timegrid-slot-label {
-          width: 100px !important;
-          min-width: 100px !important;
-          overflow: visible !important;
+        .fc .fc-timegrid-slot-label,
+        .fc col.fc-timegrid-axis {
+          width: 90px !important;
+          min-width: 90px !important;
+          max-width: 90px !important;
+        }
+
+        .fc .fc-timegrid-axis-frame,
+        .fc .fc-timegrid-slot-label-frame {
+          width: 90px !important;
+          text-align: center !important;
         }
 
         .fc .fc-v-event {
-          border-radius: 8px !important;
+          border-radius: 10px !important;
           border: none !important;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+          box-shadow: 0 4px 8px -2px rgba(168, 85, 247, 0.15) !important;
           padding: 6px 8px !important;
         }
 
-        /* Indicador de hora actual adaptado a colores Ikigai */
+        /* Indicador de hora actual Ikigai perfecto y centrado */
         .fc .fc-timegrid-now-indicator-arrow {
           margin-top: -12px !important;
-          left: 2px !important;
+          left: 10px !important;
           border: 1.5px solid #a855f7 !important;
-          background-color: #ffffff !important;
-          color: #9333ea !important;
-          font-size: 0.72rem !important;
-          font-weight: 700 !important;
-          padding: 2px 8px !important;
+          background-color: #faf5ff !important;
+          color: #7e22ce !important;
+          font-size: 0.75rem !important;
+          font-weight: 800 !important;
+          padding: 2px 10px !important;
           border-radius: 9999px !important;
           z-index: 30 !important;
-          box-shadow: 0 1px 4px rgba(147, 51, 234, 0.25);
+          box-shadow: 0 2px 6px rgba(168, 85, 247, 0.3);
           white-space: nowrap !important;
         }
 
         .fc .fc-timegrid-now-indicator-line {
-          border-color: #a855f7 !important;
+          border-color: #c084fc !important;
           border-width: 2px 0 0 0 !important;
           z-index: 20 !important;
-          left: 0 !important;
-          right: 0 !important;
-          width: 100% !important;
+        }
+
+        /* Estilos suaves para botones del calendario de FullCalendar */
+        .fc .fc-button-primary {
+          background-color: #f3e8ff !important;
+          border-color: #e9d5ff !important;
+          color: #6b21a8 !important;
+          font-weight: 600 !important;
+          border-radius: 8px !important;
+          box-shadow: none !important;
+        }
+
+        .fc .fc-button-primary:hover {
+          background-color: #e9d5ff !important;
+          border-color: #d8b4fe !important;
+          color: #581c87 !important;
+        }
+
+        .fc .fc-button-primary:disabled {
+          background-color: #f5f3ff !important;
+          border-color: #f5f3ff !important;
+          color: #c084fc !important;
+        }
+
+        .fc .fc-button-active {
+          background-color: #a855f7 !important;
+          border-color: #a855f7 !important;
+          color: #ffffff !important;
+        }
+
+        .fc-theme-standard td, .fc-theme-standard th {
+          border-color: #f3e8ff !important;
         }
 
         .fc-timegrid-body {
@@ -520,7 +556,7 @@ export default function Home() {
         }
       `}</style>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', backgroundColor: '#ffffff', padding: '1.25rem', borderRadius: '1rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '1.25rem', boxShadow: '0 4px 20px -2px rgba(168, 85, 247, 0.08)', border: '1px solid #f3e8ff' }}>
         
         {/* Encabezado e Indicadores / Filtros de Especialistas */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -545,18 +581,18 @@ export default function Home() {
                 width: '42px',
                 height: '42px',
                 borderRadius: '50%',
-                backgroundColor: especialistaSeleccionada === null ? '#0f172a' : '#f1f5f9',
-                color: especialistaSeleccionada === null ? '#ffffff' : '#64748b',
+                backgroundColor: especialistaSeleccionada === null ? '#a855f7' : '#f3e8ff',
+                color: especialistaSeleccionada === null ? '#ffffff' : '#7e22ce',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontWeight: 'bold',
                 fontSize: '0.85rem',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+                boxShadow: '0 2px 6px rgba(168,85,247,0.15)'
               }}>
                 TODAS
               </div>
-              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#334155', letterSpacing: '0.05em' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#6b21a8', letterSpacing: '0.05em' }}>
                 TODAS
               </span>
             </button>
@@ -596,11 +632,11 @@ export default function Home() {
                     justifyContent: 'center',
                     fontWeight: 'bold',
                     fontSize: '1rem',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
                   }}>
                     {inicial}
                   </div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#334155', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#581c87', letterSpacing: '0.05em' }}>
                     {esp.nombre ? esp.nombre.toUpperCase() : ''}
                   </span>
                 </button>
@@ -610,16 +646,16 @@ export default function Home() {
 
           <button
             onClick={() => setAdminModalOpen(true)}
-            style={{ backgroundColor: isAdmin ? '#1e293b' : '#475569', color: '#ffffff', padding: '0.5rem 1rem', borderRadius: '0.5rem', border: 'none', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}
+            style={{ backgroundColor: isAdmin ? '#7e22ce' : '#f3e8ff', color: isAdmin ? '#ffffff' : '#6b21a8', padding: '0.5rem 1.1rem', borderRadius: '0.625rem', border: '1px solid #e9d5ff', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
           >
-            {isAdmin ? '🔓 Panel Admin' : '🔒 Admin'}
+            {isAdmin ? '🔓 Panel Admin' : '🔒 Panel Admin'}
           </button>
         </div>
 
-        {/* Header Agenda Ikigai con Logo mejorado */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+        {/* Header Agenda Ikigai con Logo */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', overflow: 'hidden', border: '1px solid #e2e8f0', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+            <div style={{ width: '58px', height: '58px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #f3e8ff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', boxShadow: '0 2px 8px rgba(168,85,247,0.12)' }}>
               <img
                 src="/logoIKIGAI.jpeg"
                 alt="Ikigai Logo"
@@ -627,16 +663,16 @@ export default function Home() {
               />
             </div>
             <div>
-              <h1 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>
+              <h1 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#3b0764', margin: 0, letterSpacing: '-0.02em' }}>
                 Agenda Ikigai {especialistaSeleccionada ? `- ${especialistaSeleccionada.toUpperCase()}` : ''}
               </h1>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Horario de atención de Lunes a Sábado, 9:00 AM - 5:00 PM</p>
+              <p style={{ margin: 0, fontSize: '0.82rem', color: '#7e22ce', opacity: 0.8 }}>Horario de atención de Lunes a Sábado, 9:00 AM - 5:00 PM</p>
             </div>
           </div>
 
           <button
             onClick={handleAbrirModalCita}
-            style={{ backgroundColor: '#a855f7', color: '#ffffff', padding: '0.5.rem 1rem', borderRadius: '0.5rem', fontWeight: 600, cursor: 'pointer', border: 'none', transition: 'background-color 0.2s' }}
+            style={{ backgroundColor: '#a855f7', color: '#ffffff', padding: '0.6rem 1.25rem', borderRadius: '0.625rem', fontWeight: 700, cursor: 'pointer', border: 'none', boxShadow: '0 4px 12px rgba(168,85,247,0.25)', transition: 'all 0.2s ease' }}
           >
             + Nueva Cita
           </button>
@@ -701,40 +737,40 @@ export default function Home() {
 
       </div>
 
-      {/* MODAL CREAR CITA PÚBLICO */}
+      {/* MODAL CREAR CITA PÚBLICO - Fondo Lavanda Suave */}
       {modalOpen && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', zIndex: 9999 }}>
-          <div style={{ backgroundColor: '#ffffff', padding: '1.25rem', borderRadius: '0.75rem', maxWidth: '420px', width: '100%' }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.25rem', color: '#111827' }}>Agendar Nueva Cita</h2>
-            <p style={{ fontSize: '0.75rem', color: '#6b7280', marginBottom: '1rem' }}>Horario: Lunes a Sábado (9:00 AM - 6:00 PM)</p>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(243, 232, 255, 0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', zIndex: 9999 }}>
+          <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '1rem', maxWidth: '420px', width: '100%', boxShadow: '0 20px 25px -5px rgba(168, 85, 247, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.05)', border: '1px solid #f3e8ff' }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 'bold', marginBottom: '0.25rem', color: '#3b0764' }}>Agendar Nueva Cita</h2>
+            <p style={{ fontSize: '0.78rem', color: '#7e22ce', marginBottom: '1.25rem', opacity: 0.8 }}>Horario: Lunes a Sábado (9:00 AM - 6:00 PM)</p>
             
-            <form onSubmit={handleSubmitCita} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <form onSubmit={handleSubmitCita} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Nombre Completo</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Nombre Completo</label>
                 <input
                   type="text"
                   required
                   value={formData.cliente_nombre}
                   onChange={(e) => setFormData({ ...formData, cliente_nombre: e.target.value })}
-                  style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', boxSizing: 'border-box' }}
+                  style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Teléfono</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Teléfono</label>
                 <input
                   type="tel"
                   required
                   value={formData.cliente_telefono}
                   onChange={(e) => setFormData({ ...formData, cliente_telefono: e.target.value })}
-                  style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', boxSizing: 'border-box' }}
+                  style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Especialista</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Especialista</label>
                 <select
                   value={formData.manicurista_nombre}
                   onChange={(e) => setFormData({ ...formData, manicurista_nombre: e.target.value })}
-                  style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', backgroundColor: '#fff', boxSizing: 'border-box' }}
+                  style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', backgroundColor: '#fff', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                 >
                   {especialistas.map((esp) => (
                     <option key={esp.id} value={esp.nombre}>{esp.nombre}</option>
@@ -742,11 +778,11 @@ export default function Home() {
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Servicio</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Servicio</label>
                 <select
                   value={formData.servicio_nombre}
                   onChange={(e) => setFormData({ ...formData, servicio_nombre: e.target.value })}
-                  style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', backgroundColor: '#fff', boxSizing: 'border-box' }}
+                  style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', backgroundColor: '#fff', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                 >
                   {servicios.map((s) => (
                     <option key={s.id} value={s.nombre}>{s.nombre} ({s.duracion_minutos} min)</option>
@@ -755,17 +791,17 @@ export default function Home() {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Fecha</label>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Fecha</label>
                   <input
                     type="date"
                     required
                     value={formData.fecha}
                     onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
-                    style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', boxSizing: 'border-box' }}
+                    style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Hora de Inicio</label>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Hora de Inicio</label>
                   <input
                     type="time"
                     required
@@ -773,22 +809,22 @@ export default function Home() {
                     max="17:00"
                     value={formData.hora_inicio}
                     onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
-                    style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', boxSizing: 'border-box' }}
+                    style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                   />
                 </div>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '0.75rem' }}>
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  style={{ padding: '0.5rem 0.75rem', backgroundColor: '#e5e7eb', color: '#374151', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem' }}
+                  style={{ padding: '0.55rem 0.85rem', backgroundColor: '#f3e8ff', color: '#6b21a8', borderRadius: '0.5rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  style={{ padding: '0.5rem 0.75rem', backgroundColor: '#a855f7', color: '#ffffff', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}
+                  style={{ padding: '0.55rem 1rem', backgroundColor: '#a855f7', color: '#ffffff', borderRadius: '0.5rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 700 }}
                 >
                   Confirmar Cita
                 </button>
@@ -798,24 +834,24 @@ export default function Home() {
         </div>
       )}
 
-      {/* MODAL ADMIN */}
+      {/* MODAL ADMIN - Fondo Lavanda Suave */}
       {adminModalOpen && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', zIndex: 9999 }}>
-          <div style={{ backgroundColor: '#ffffff', padding: '1.25rem', borderRadius: '0.75rem', maxWidth: isAdmin ? '850px' : '380px', width: '100%', maxHeight: '90vh', overflowY: 'auto' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(243, 232, 255, 0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', zIndex: 9999 }}>
+          <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '1rem', maxWidth: isAdmin ? '850px' : '380px', width: '100%', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 20px 25px -5px rgba(168, 85, 247, 0.15)', border: '1px solid #f3e8ff' }}>
             
             {!isAdmin ? (
               <div>
-                <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#111827' }}>Acceso Administrativo</h2>
-                <form onSubmit={handleAdminAuth} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <h2 style={{ fontSize: '1.15rem', fontWeight: 'bold', marginBottom: '0.85rem', color: '#3b0764' }}>Acceso Administrativo</h2>
+                <form onSubmit={handleAdminAuth} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#4b5563', marginBottom: '0.25rem' }}>Contraseña de Administrador</label>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#581c87', marginBottom: '0.25rem' }}>Contraseña de Administrador</label>
                     <input
                       type="password"
                       placeholder="Ingrese su clave"
                       value={adminPasswordInput}
                       required
                       autoFocus
-                      style={{ width: '100%', border: '1px solid #d1d5db', padding: '0.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', boxSizing: 'border-box' }}
+                      style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', boxSizing: 'border-box', outlineColor: '#a855f7' }}
                       onChange={(e) => setAdminPasswordInput(e.target.value)}
                     />
                   </div>
@@ -823,13 +859,13 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => setAdminModalOpen(false)}
-                      style={{ padding: '0.5rem 0.75rem', backgroundColor: '#e5e7eb', color: '#374151', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem' }}
+                      style={{ padding: '0.55rem 0.85rem', backgroundColor: '#f3e8ff', color: '#6b21a8', borderRadius: '0.5rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}
                     >
                       Cancelar
                     </button>
                     <button
                       type="submit"
-                      style={{ padding: '0.5rem 0.75rem', backgroundColor: '#1e293b', color: '#ffffff', borderRadius: '0.375rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem' }}
+                      style={{ padding: '0.55rem 1rem', backgroundColor: '#a855f7', color: '#ffffff', borderRadius: '0.5rem', border: 'none', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 700 }}
                     >
                       Ingresar
                     </button>
@@ -839,41 +875,41 @@ export default function Home() {
             ) : (
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#111827', margin: 0 }}>Panel Administrativo</h2>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#3b0764', margin: 0 }}>Panel Administrativo</h2>
                   <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                     <button
                       type="button"
                       onClick={() => setReporteModalOpen(true)}
-                      style={{ padding: '0.35rem 0.7rem', backgroundColor: '#10b981', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}
+                      style={{ padding: '0.4rem 0.8rem', backgroundColor: '#10b981', color: '#fff', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}
                     >
                       📊 Reporte Semanal
                     </button>
                     <button
                       type="button"
                       onClick={() => setAdminModalOpen(false)}
-                      style={{ padding: '0.35rem 0.7rem', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}
+                      style={{ padding: '0.4rem 0.8rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600 }}
                     >
                       ✕ Cerrar
                     </button>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '2px solid #e5e7eb', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '2px solid #f3e8ff', marginBottom: '1rem' }}>
                   <button
                     onClick={() => setAdminTab('citas')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'citas' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'citas' ? '#a855f7' : '#4b5563' }}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 700, cursor: 'pointer', borderBottom: adminTab === 'citas' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'citas' ? '#a855f7' : '#6b21a8' }}
                   >
                     📅 Citas ({citasFiltradas.length})
                   </button>
                   <button
                     onClick={() => setAdminTab('especialistas')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'especialistas' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'especialistas' ? '#a855f7' : '#4b5563' }}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 700, cursor: 'pointer', borderBottom: adminTab === 'especialistas' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'especialistas' ? '#a855f7' : '#6b21a8' }}
                   >
                     💅 Especialistas ({especialistas.length})
                   </button>
                   <button
                     onClick={() => setAdminTab('servicios')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 600, cursor: 'pointer', borderBottom: adminTab === 'servicios' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'servicios' ? '#a855f7' : '#4b5563' }}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 700, cursor: 'pointer', borderBottom: adminTab === 'servicios' ? '3px solid #a855f7' : 'transparent', color: adminTab === 'servicios' ? '#a855f7' : '#6b21a8' }}
                   >
                     ✨ Servicios ({servicios.length})
                   </button>
@@ -883,15 +919,15 @@ export default function Home() {
                 {adminTab === 'citas' && (
                   <div>
                     {editingCita && (
-                      <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '0.75rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
-                        <h4 style={{ margin: '0 0 0.5rem 0', color: '#166534', fontSize: '0.9rem' }}>Modificar Cita ID #{editingCita.id}</h4>
+                      <div style={{ backgroundColor: '#faf5ff', border: '1px solid #e9d5ff', padding: '0.85rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                        <h4 style={{ margin: '0 0 0.5rem 0', color: '#581c87', fontSize: '0.9rem' }}>Modificar Cita ID #{editingCita.id}</h4>
                         <form onSubmit={handleGuardarModificacionCita} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.5rem' }}>
                           <input
                             type="text"
                             placeholder="Cliente"
                             value={editingCita.cliente_nombre}
                             onChange={(e) => setEditingCita({ ...editingCita, cliente_nombre: e.target.value })}
-                            style={{ padding: '0.4rem', border: '1px solid #ccc', borderRadius: '0.25rem' }}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
                             required
                           />
                           <input
@@ -899,13 +935,13 @@ export default function Home() {
                             placeholder="Teléfono"
                             value={editingCita.cliente_telefono}
                             onChange={(e) => setEditingCita({ ...editingCita, cliente_telefono: e.target.value })}
-                            style={{ padding: '0.4rem', border: '1px solid #ccc', borderRadius: '0.25rem' }}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
                             required
                           />
                           <select
                             value={editingCita.manicurista_nombre}
                             onChange={(e) => setEditingCita({ ...editingCita, manicurista_nombre: e.target.value })}
-                            style={{ padding: '0.4rem', border: '1px solid #ccc', borderRadius: '0.25rem', backgroundColor: '#fff' }}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem', backgroundColor: '#fff' }}
                           >
                             {especialistas.map((esp) => (
                               <option key={esp.id} value={esp.nombre}>{esp.nombre}</option>
@@ -914,7 +950,7 @@ export default function Home() {
                           <select
                             value={editingCita.servicio_nombre}
                             onChange={(e) => setEditingCita({ ...editingCita, servicio_nombre: e.target.value })}
-                            style={{ padding: '0.4rem', border: '1px solid #ccc', borderRadius: '0.25rem', backgroundColor: '#fff' }}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem', backgroundColor: '#fff' }}
                           >
                             {servicios.map((s) => (
                               <option key={s.id} value={s.nombre}>{s.nombre}</option>
@@ -924,7 +960,7 @@ export default function Home() {
                             type="date"
                             value={editingCita.fecha}
                             onChange={(e) => setEditingCita({ ...editingCita, fecha: e.target.value })}
-                            style={{ padding: '0.4rem', border: '1px solid #ccc', borderRadius: '0.25rem' }}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
                             required
                           />
                           <input
@@ -933,12 +969,12 @@ export default function Home() {
                             min="09:00"
                             max="17:00"
                             onChange={(e) => setEditingCita({ ...editingCita, hora_inicio: e.target.value })}
-                            style={{ padding: '0.4rem', border: '1px solid #ccc', borderRadius: '0.25rem' }}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
                             required
                           />
                           <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '0.5rem', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
-                            <button type="button" onClick={() => setEditingCita(null)} style={{ padding: '0.35rem 0.6rem', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>Cancelar</button>
-                            <button type="submit" style={{ padding: '0.35rem 0.6rem', backgroundColor: '#22c55e', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>Guardar Cambios</button>
+                            <button type="button" onClick={() => setEditingCita(null)} style={{ padding: '0.35rem 0.75rem', backgroundColor: '#f3e8ff', color: '#6b21a8', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}>Cancelar</button>
+                            <button type="submit" style={{ padding: '0.35rem 0.75rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}>Guardar Cambios</button>
                           </div>
                         </form>
                       </div>
@@ -947,54 +983,54 @@ export default function Home() {
                     <div style={{ overflowX: 'auto' }}>
                       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
                         <thead>
-                          <tr style={{ backgroundColor: '#f3f4f6', borderBottom: '1px solid #e5e7eb' }}>
-                            <th style={{ padding: '0.5rem' }}>Fecha</th>
-                            <th style={{ padding: '0.5rem' }}>Hora</th>
-                            <th style={{ padding: '0.5rem' }}>Cliente</th>
-                            <th style={{ padding: '0.5rem' }}>Especialista</th>
-                            <th style={{ padding: '0.5rem' }}>Servicio</th>
-                            <th style={{ padding: '0.5rem' }}>Acciones Rápidas</th>
+                          <tr style={{ backgroundColor: '#faf5ff', borderBottom: '1px solid #f3e8ff' }}>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Fecha</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Hora</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Cliente</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Especialista</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Servicio</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Acciones Rápidas</th>
                           </tr>
                         </thead>
                         <tbody>
                           {citasFiltradas.length === 0 ? (
                             <tr>
-                              <td colSpan={6} style={{ padding: '1rem', textAlign: 'center', color: '#6b7280' }}>No hay citas registradas.</td>
+                              <td colSpan={6} style={{ padding: '1rem', textAlign: 'center', color: '#9333ea' }}>No hay citas registradas.</td>
                             </tr>
                           ) : (
                             citasFiltradas.map((cita) => (
-                              <tr key={cita.id} style={{ borderBottom: '1px solid #e5e7eb' }}>
-                                <td style={{ padding: '0.5rem' }}>{cita.fecha}</td>
-                                <td style={{ padding: '0.5rem' }}>{cita.hora_inicio} - {cita.hora_fin}</td>
-                                <td style={{ padding: '0.5rem' }}><strong>{cita.cliente_nombre}</strong><br/><span style={{ color: '#6b7280' }}>{cita.cliente_telefono}</span></td>
-                                <td style={{ padding: '0.5rem' }}>{cita.manicurista_nombre}</td>
-                                <td style={{ padding: '0.5rem' }}>{cita.servicio_nombre}</td>
-                                <td style={{ padding: '0.5rem' }}>
-                                  <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap' }}>
+                              <tr key={cita.id} style={{ borderBottom: '1px solid #faf5ff' }}>
+                                <td style={{ padding: '0.6rem' }}>{cita.fecha}</td>
+                                <td style={{ padding: '0.6rem' }}>{cita.hora_inicio} - {cita.hora_fin}</td>
+                                <td style={{ padding: '0.6rem' }}><strong>{cita.cliente_nombre}</strong><br/><span style={{ color: '#7e22ce', opacity: 0.8 }}>{cita.cliente_telefono}</span></td>
+                                <td style={{ padding: '0.6rem' }}>{cita.manicurista_nombre}</td>
+                                <td style={{ padding: '0.6rem' }}>{cita.servicio_nombre}</td>
+                                <td style={{ padding: '0.6rem' }}>
+                                  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
                                     <button
                                       onClick={() => {
                                         const urlCliente = generarLinkWhatsApp(cita.cliente_telefono, msgConfirmacionCliente(cita));
                                         window.open(urlCliente, '_blank');
                                       }}
-                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#25D366', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#25D366', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}
                                     >
                                       💬 WhatsApp
                                     </button>
                                     <button
                                       onClick={() => setEditingCita(cita)}
-                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
                                     >
                                       ✏️ Cambiar
                                     </button>
                                     <button
                                       onClick={() => handleLiberarCita(cita.id)}
-                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f97316', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f97316', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
                                     >
                                       🔓 Liberar
                                     </button>
                                     <button
                                       onClick={() => handleEliminarCita(cita.id)}
-                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
                                     >
                                       🗑️ Eliminar
                                     </button>
@@ -1018,12 +1054,12 @@ export default function Home() {
                         placeholder="Nombre de nueva especialista"
                         value={nuevoEspNombre}
                         onChange={(e) => setNuevoEspNombre(e.target.value)}
-                        style={{ flex: 1, padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', fontSize: '0.85rem' }}
+                        style={{ flex: 1, padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
                         required
                       />
                       <button
                         type="submit"
-                        style={{ padding: '0.5rem 1rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem 1rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
                       >
                         + Agregar
                       </button>
@@ -1031,21 +1067,21 @@ export default function Home() {
 
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#f3f4f6', borderBottom: '1px solid #e5e7eb', textAlign: 'left' }}>
-                          <th style={{ padding: '0.5rem' }}>ID</th>
-                          <th style={{ padding: '0.5rem' }}>Nombre</th>
-                          <th style={{ padding: '0.5rem', textAlign: 'right' }}>Acción</th>
+                        <tr style={{ backgroundColor: '#faf5ff', borderBottom: '1px solid #f3e8ff', textAlign: 'left' }}>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>ID</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Nombre</th>
+                          <th style={{ padding: '0.6rem', textAlign: 'right', color: '#581c87' }}>Acción</th>
                         </tr>
                       </thead>
                       <tbody>
                         {especialistas.map((esp) => (
-                          <tr key={esp.id} style={{ borderBottom: '1px solid #e5e7eb' }}>
-                            <td style={{ padding: '0.5rem' }}>#{esp.id}</td>
-                            <td style={{ padding: '0.5rem', fontWeight: 600 }}>{esp.nombre}</td>
-                            <td style={{ padding: '0.5rem', textAlign: 'right' }}>
+                          <tr key={esp.id} style={{ borderBottom: '1px solid #faf5ff' }}>
+                            <td style={{ padding: '0.6rem' }}>#{esp.id}</td>
+                            <td style={{ padding: '0.6rem', fontWeight: 600 }}>{esp.nombre}</td>
+                            <td style={{ padding: '0.6rem', textAlign: 'right' }}>
                               <button
                                 onClick={() => handleEliminarEspecialista(esp.id)}
-                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
                               >
                                 🗑️ Eliminar
                               </button>
@@ -1066,7 +1102,7 @@ export default function Home() {
                         placeholder="Nombre del servicio"
                         value={nuevoServNombre}
                         onChange={(e) => setNuevoServNombre(e.target.value)}
-                        style={{ padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
                         required
                       />
                       <input
@@ -1074,7 +1110,7 @@ export default function Home() {
                         placeholder="Duración (min)"
                         value={nuevoServDuracion}
                         onChange={(e) => setNuevoServDuracion(Number(e.target.value))}
-                        style={{ padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
                         required
                       />
                       <input
@@ -1083,11 +1119,11 @@ export default function Home() {
                         placeholder="Precio ($)"
                         value={nuevoServPrecio}
                         onChange={(e) => setNuevoServPrecio(e.target.value)}
-                        style={{ padding: '0.5rem', border: '1px solid #d1d5db', borderRadius: '0.375rem', fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
                       />
                       <button
                         type="submit"
-                        style={{ padding: '0.5rem 1rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
+                        style={{ padding: '0.55rem 1rem', backgroundColor: '#a855f7', color: '#fff', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
                       >
                         + Agregar
                       </button>
@@ -1095,25 +1131,25 @@ export default function Home() {
 
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#f3f4f6', borderBottom: '1px solid #e5e7eb', textAlign: 'left' }}>
-                          <th style={{ padding: '0.5rem' }}>ID</th>
-                          <th style={{ padding: '0.5rem' }}>Servicio</th>
-                          <th style={{ padding: '0.5rem' }}>Duración</th>
-                          <th style={{ padding: '0.5rem' }}>Precio</th>
-                          <th style={{ padding: '0.5rem', textAlign: 'right' }}>Acción</th>
+                        <tr style={{ backgroundColor: '#faf5ff', borderBottom: '1px solid #f3e8ff', textAlign: 'left' }}>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>ID</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Servicio</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Duración</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Precio</th>
+                          <th style={{ padding: '0.6rem', textAlign: 'right', color: '#581c87' }}>Acción</th>
                         </tr>
                       </thead>
                       <tbody>
                         {servicios.map((s) => (
-                          <tr key={s.id} style={{ borderBottom: '1px solid #e5e7eb' }}>
-                            <td style={{ padding: '0.5rem' }}>#{s.id}</td>
-                            <td style={{ padding: '0.5rem', fontWeight: 600 }}>{s.nombre}</td>
-                            <td style={{ padding: '0.5rem' }}>{s.duracion_minutos} min</td>
-                            <td style={{ padding: '0.5rem' }}>${s.precio ?? 0}</td>
-                            <td style={{ padding: '0.5rem', textAlign: 'right' }}>
+                          <tr key={s.id} style={{ borderBottom: '1px solid #faf5ff' }}>
+                            <td style={{ padding: '0.6rem' }}>#{s.id}</td>
+                            <td style={{ padding: '0.6rem', fontWeight: 600 }}>{s.nombre}</td>
+                            <td style={{ padding: '0.6rem' }}>{s.duracion_minutos} min</td>
+                            <td style={{ padding: '0.6rem' }}>${s.precio ?? 0}</td>
+                            <td style={{ padding: '0.6rem', textAlign: 'right' }}>
                               <button
                                 onClick={() => handleEliminarServicio(s.id)}
-                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#ef4444', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
                               >
                                 🗑️ Eliminar
                               </button>
