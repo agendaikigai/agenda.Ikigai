@@ -471,85 +471,96 @@ export default function Home() {
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', padding: '1.25rem' }}>
       <style jsx global>{`
-        /* Definición clara de la columna del eje de horas con separador visual */
-        .fc .fc-timegrid-axis,
-        .fc .fc-timegrid-slot-label,
-        .fc col.fc-timegrid-axis {
-          width: 85px !important;
-          min-width: 85px !important;
-          max-width: 85px !important;
-          background-color: #f7fee7 !important; /* Verde menta super clarito para distinguir la columna */
-          border-right: 2px solid #e9d5ff !important; /* Línea morada divisoria clara con el día lunes */
-        }
+  /* 1. Ampliación y apertura de desbordamiento en la columna del tiempo */
+  .fc .fc-timegrid-axis,
+  .fc .fc-timegrid-slot-label,
+  .fc col.fc-timegrid-axis {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    background-color: #f7fee7 !important; /* Verde menta clarito */
+    border-right: 2px solid #e9d5ff !important; /* Separación morada con el día lunes */
+    overflow: visible !important;
+  }
 
-        .fc .fc-timegrid-slot-label-frame {
-          text-align: center !important;
-          font-weight: 600 !important;
-          color: #581c87 !important;
-        }
+  .fc .fc-timegrid-axis-frame,
+  .fc .fc-timegrid-slot-label-frame,
+  .fc-timegrid-slots,
+  .fc-timegrid-cols {
+    overflow: visible !important;
+  }
 
-        .fc .fc-v-event {
-          border-radius: 10px !important;
-          border: none !important;
-          box-shadow: 0 4px 8px -2px rgba(139, 92, 246, 0.2) !important;
-          padding: 6px 8px !important;
-        }
+  .fc .fc-timegrid-slot-label-frame {
+    text-align: center !important;
+    font-weight: 600 !important;
+    color: #581c87 !important;
+  }
 
-        /* Óvalo indicador de la hora actual en Morado Cálido */
-        .fc .fc-timegrid-now-indicator-arrow {
-          margin-top: -12px !important;
-          left: 6px !important;
-          border: 1.5px solid #7c3aed !important;
-          background-color: #7c3aed !important;
-          color: #ffffff !important;
-          font-size: 0.73rem !important;
-          font-weight: 800 !important;
-          padding: 3px 8px !important;
-          border-radius: 9999px !important;
-          z-index: 40 !important;
-          box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
-          white-space: nowrap !important;
-        }
+  .fc .fc-v-event {
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0 4px 8px -2px rgba(139, 92, 246, 0.2) !important;
+    padding: 6px 8px !important;
+  }
 
-        .fc .fc-timegrid-now-indicator-line {
-          border-color: #8b5cf6 !important;
-          border-width: 2px 0 0 0 !important;
-          z-index: 30 !important;
-        }
+  /* 2. Óvalo indicador de hora actual centrado y flotante */
+  .fc .fc-timegrid-now-indicator-arrow {
+    margin-top: -13px !important;
+    left: 10px !important;
+    border: 1.5px solid #7c3aed !important;
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 9999px !important;
+    z-index: 50 !important;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    white-space: nowrap !important;
+    display: inline-block !important;
+    visibility: visible !important;
+  }
 
-        /* Estilos en Morado Cálido y Menta Clarita para los botones FullCalendar */
-        .fc .fc-button-primary {
-          background-color: #f3e8ff !important;
-          border-color: #e9d5ff !important;
-          color: #6b21a8 !important;
-          font-weight: 700 !important;
-          border-radius: 10px !important;
-          box-shadow: none !important;
-        }
+  .fc .fc-timegrid-now-indicator-line {
+    border-color: #8b5cf6 !important;
+    border-width: 2px 0 0 0 !important;
+    z-index: 40 !important;
+  }
 
-        .fc .fc-button-primary:hover {
-          background-color: #e9d5ff !important;
-          color: #581c87 !important;
-        }
+  /* Estilos de botones */
+  .fc .fc-button-primary {
+    background-color: #f3e8ff !important;
+    border-color: #e9d5ff !important;
+    color: #6b21a8 !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+  }
 
-        .fc .fc-button-active {
-          background-color: #8b5cf6 !important;
-          border-color: #8b5cf6 !important;
-          color: #ffffff !important;
-        }
+  .fc .fc-button-primary:hover {
+    background-color: #e9d5ff !important;
+    color: #581c87 !important;
+  }
 
-        .fc-theme-standard td, .fc-theme-standard th {
-          border-color: #f3e8ff !important;
-        }
+  .fc .fc-button-active {
+    background-color: #8b5cf6 !important;
+    border-color: #8b5cf6 !important;
+    color: #ffffff !important;
+  }
 
-        .fc-timegrid-body {
-          position: relative !important;
-        }
+  .fc-theme-standard td, .fc-theme-standard th {
+    border-color: #f3e8ff !important;
+  }
 
-        .fc-timegrid-slot {
-          cursor: pointer;
-        }
-      `}</style>
+  .fc-timegrid-body {
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .fc-timegrid-slot {
+    cursor: pointer;
+  }
+`}</style>
 
       <div style={{ maxWidth: '1220px', margin: '0 auto', backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '1.25rem', boxShadow: '0 4px 20px -2px rgba(139, 92, 246, 0.08)', border: '1px solid #f3e8ff' }}>
         
