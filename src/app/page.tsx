@@ -196,7 +196,7 @@ export default function Home() {
     const dayOfWeek = dateObj.getDay();
 
     if (dayOfWeek === 0 || dayOfWeek === 1) {
-      alert('⚠️ Solo se pueden agendar citas de Martes a Sábado.');
+      alert('⚠️ Solo se pueden agendar citas de Lunes a Sábado.');
       return false;
     }
 
@@ -630,7 +630,7 @@ export default function Home() {
               <h1 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>
                 Agenda Ikigai {especialistaSeleccionada ? `- ${especialistaSeleccionada.toUpperCase()}` : ''}
               </h1>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Horario de atención: Martes a Sábado, 9:00 AM - 5:00 PM</p>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Horario de atención de Lunes a Sábado, 9:00 AM - 5:00 PM</p>
             </div>
           </div>
 
