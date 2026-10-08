@@ -470,34 +470,35 @@ export default function Home() {
 
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', padding: '1.25rem' }}>
-     <style jsx global>{`
-  /* 1. Ancho y desbordamiento libre para el eje de horas */
+    <style jsx global>{`
+  /* 1. Columna del eje de horas ampliada a 130px con espacio holgado */
   .fc .fc-timegrid-axis,
   .fc .fc-timegrid-slot-label,
   .fc col.fc-timegrid-axis {
-    width: 95px !important;
-    min-width: 95px !important;
-    max-width: 95px !important;
-    background-color: #f7fee7 !important; /* Verde menta super clarito */
+    width: 130px !important;
+    min-width: 130px !important;
+    max-width: 130px !important;
+    background-color: #f7fee7 !important; /* Verde menta clarito Ikigai */
     border-right: 2px solid #e9d5ff !important;
     overflow: visible !important;
   }
 
-  /* 2. Forzar que ningún contenedor interno corte el indicador de hora */
-  .fc .fc-timegrid,
-  .fc .fc-timegrid-body,
-  .fc .fc-timegrid-cols,
-  .fc .fc-timegrid-slots,
-  .fc .fc-timegrid-slot-label-frame,
+  /* Asegurar desbordamiento libre en contenedores */
   .fc .fc-timegrid-axis-frame,
-  .fc .fc-scroller,
-  .fc .fc-scroller-liquid-absolute {
+  .fc .fc-timegrid-slot-label-frame,
+  .fc-timegrid-slots,
+  .fc-timegrid-cols,
+  .fc-timegrid-body,
+  .fc .fc-scroller {
     overflow: visible !important;
   }
 
+  /* Números de las horas (9 a 17) alineados a la izquierda */
   .fc .fc-timegrid-slot-label-frame {
-    text-align: center !important;
-    font-weight: 600 !important;
+    text-align: left !important;
+    padding-left: 14px !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
     color: #581c87 !important;
   }
 
@@ -508,31 +509,33 @@ export default function Home() {
     padding: 6px 8px !important;
   }
 
-  /* 3. Óvalo flotante al frente de todo el calendario */
+  /* 2. Óvalo flotante de hora actual posicionado a la derecha del número */
   .fc .fc-timegrid-now-indicator-arrow {
+    position: absolute !important;
     margin-top: -12px !important;
-    left: -75px !important; /* Desplaza el óvalo a la izquierda para no tapar los números de las horas */
+    left: 45px !important; /* Desplazado a la derecha del número para no taparlo */
     border: 1.5px solid #7c3aed !important;
     background-color: #7c3aed !important;
     color: #ffffff !important;
     font-size: 0.72rem !important;
     font-weight: 800 !important;
-    padding: 3px 8px !important;
+    padding: 3px 10px !important;
     border-radius: 9999px !important;
-    z-index: 9999 !important; /* Capa superior absoluta para flotar al frente */
-    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    z-index: 9999 !important; /* Flotante por encima de todo */
+    box-shadow: 0 3px 8px rgba(124, 58, 237, 0.4) !important;
     white-space: nowrap !important;
-    position: absolute !important;
     display: inline-block !important;
+    visibility: visible !important;
   }
 
+  /* Línea morada indicadora que cruza el día actual */
   .fc .fc-timegrid-now-indicator-line {
     border-color: #8b5cf6 !important;
     border-width: 2px 0 0 0 !important;
     z-index: 9998 !important;
   }
 
-  /* Estilos de botones FullCalendar */
+  /* Estilos de botones de la interfaz */
   .fc .fc-button-primary {
     background-color: #f3e8ff !important;
     border-color: #e9d5ff !important;
