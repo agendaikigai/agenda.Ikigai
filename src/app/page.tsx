@@ -470,23 +470,28 @@ export default function Home() {
 
   return (
     <main style={{ minHeight: '100vh', backgroundColor: '#fcf8ff', padding: '1.25rem' }}>
-      <style jsx global>{`
-  /* 1. Ampliación y apertura de desbordamiento en la columna del tiempo */
+     <style jsx global>{`
+  /* 1. Ancho y desbordamiento libre para el eje de horas */
   .fc .fc-timegrid-axis,
   .fc .fc-timegrid-slot-label,
   .fc col.fc-timegrid-axis {
-    width: 110px !important;
-    min-width: 110px !important;
-    max-width: 110px !important;
-    background-color: #f7fee7 !important; /* Verde menta clarito */
-    border-right: 2px solid #e9d5ff !important; /* Separación morada con el día lunes */
+    width: 95px !important;
+    min-width: 95px !important;
+    max-width: 95px !important;
+    background-color: #f7fee7 !important; /* Verde menta super clarito */
+    border-right: 2px solid #e9d5ff !important;
     overflow: visible !important;
   }
 
-  .fc .fc-timegrid-axis-frame,
+  /* 2. Forzar que ningún contenedor interno corte el indicador de hora */
+  .fc .fc-timegrid,
+  .fc .fc-timegrid-body,
+  .fc .fc-timegrid-cols,
+  .fc .fc-timegrid-slots,
   .fc .fc-timegrid-slot-label-frame,
-  .fc-timegrid-slots,
-  .fc-timegrid-cols {
+  .fc .fc-timegrid-axis-frame,
+  .fc .fc-scroller,
+  .fc .fc-scroller-liquid-absolute {
     overflow: visible !important;
   }
 
@@ -503,31 +508,31 @@ export default function Home() {
     padding: 6px 8px !important;
   }
 
-  /* 2. Óvalo indicador de hora actual centrado y flotante */
+  /* 3. Óvalo flotante al frente de todo el calendario */
   .fc .fc-timegrid-now-indicator-arrow {
-    margin-top: -13px !important;
-    left: 10px !important;
+    margin-top: -12px !important;
+    left: -75px !important; /* Desplaza el óvalo a la izquierda para no tapar los números de las horas */
     border: 1.5px solid #7c3aed !important;
     background-color: #7c3aed !important;
     color: #ffffff !important;
-    font-size: 0.75rem !important;
+    font-size: 0.72rem !important;
     font-weight: 800 !important;
-    padding: 3px 10px !important;
+    padding: 3px 8px !important;
     border-radius: 9999px !important;
-    z-index: 50 !important;
+    z-index: 9999 !important; /* Capa superior absoluta para flotar al frente */
     box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
     white-space: nowrap !important;
+    position: absolute !important;
     display: inline-block !important;
-    visibility: visible !important;
   }
 
   .fc .fc-timegrid-now-indicator-line {
     border-color: #8b5cf6 !important;
     border-width: 2px 0 0 0 !important;
-    z-index: 40 !important;
+    z-index: 9998 !important;
   }
 
-  /* Estilos de botones */
+  /* Estilos de botones FullCalendar */
   .fc .fc-button-primary {
     background-color: #f3e8ff !important;
     border-color: #e9d5ff !important;
@@ -550,11 +555,6 @@ export default function Home() {
 
   .fc-theme-standard td, .fc-theme-standard th {
     border-color: #f3e8ff !important;
-  }
-
-  .fc-timegrid-body {
-    position: relative !important;
-    overflow: visible !important;
   }
 
   .fc-timegrid-slot {
