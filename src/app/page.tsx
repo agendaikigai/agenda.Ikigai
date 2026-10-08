@@ -744,6 +744,13 @@ export default function Home() {
             }}
           />
         </div>
+
+        {/* Pie de Página */}
+        <footer style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #f3e8ff', textAlign: 'center', fontSize: '0.8rem', color: '#7c3aed', opacity: 0.8, fontWeight: 500 }}>
+           <p>© 2026 Agenda Ikigai. Todos los derechos reservados.</p>
+      <p>Creador de la Web, Ruben Abinazar Figarella.</p>
+        </footer>
+
       </div>
 
       {/* MODAL CREAR CITA PÚBLICO */}
@@ -794,7 +801,7 @@ export default function Home() {
                   style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', backgroundColor: '#fff', boxSizing: 'border-box', outlineColor: '#8b5cf6' }}
                 >
                   {servicios.map((s) => (
-                    <option key={s.id} value={s.nombre}>{s.nombre} ({s.duracion_minutos} min)</option>
+                    <option key={s.id} value={s.nombre}>{s.nombre} ({s.duracion_minutos} min) - €{s.precio ?? 0}</option>
                   ))}
                 </select>
               </div>
@@ -1125,7 +1132,7 @@ export default function Home() {
                       <input
                         type="number"
                         step="0.01"
-                        placeholder="Precio ($)"
+                        placeholder="Precio (€)"
                         value={nuevoServPrecio}
                         onChange={(e) => setNuevoServPrecio(e.target.value)}
                         style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
@@ -1144,7 +1151,7 @@ export default function Home() {
                           <th style={{ padding: '0.6rem', color: '#581c87' }}>ID</th>
                           <th style={{ padding: '0.6rem', color: '#581c87' }}>Servicio</th>
                           <th style={{ padding: '0.6rem', color: '#581c87' }}>Duración</th>
-                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Precio</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Precio (€)</th>
                           <th style={{ padding: '0.6rem', textAlign: 'right', color: '#581c87' }}>Acción</th>
                         </tr>
                       </thead>
@@ -1154,7 +1161,7 @@ export default function Home() {
                             <td style={{ padding: '0.6rem' }}>#{s.id}</td>
                             <td style={{ padding: '0.6rem', fontWeight: 600 }}>{s.nombre}</td>
                             <td style={{ padding: '0.6rem' }}>{s.duracion_minutos} min</td>
-                            <td style={{ padding: '0.6rem' }}>${s.precio ?? 0}</td>
+                            <td style={{ padding: '0.6rem' }}>€{s.precio ?? 0}</td>
                             <td style={{ padding: '0.6rem', textAlign: 'right' }}>
                               <button
                                 onClick={() => handleEliminarServicio(s.id)}
