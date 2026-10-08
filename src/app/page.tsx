@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -71,7 +72,6 @@ export default function Home() {
     } else {
       currentEspecialistas = [
         { id: 1, nombre: 'STEFANY' },
-        
       ];
     }
     setEspecialistas(currentEspecialistas);
@@ -189,7 +189,7 @@ export default function Home() {
     }
   };
 
-  // Validar restricciones de horario y días (Martes a Sábado, 9:00 AM a 5:00 PM)
+  // Validar restricciones de horario y días (Lunes a Sábado, 9:00 AM a 5:00 PM)
   const validarHorarioYDia = (fechaStr: string, horaInicioStr: string, duracionMinutos: number) => {
     const [year, month, day] = fechaStr.split('-').map(Number);
     const dateObj = new Date(year, month - 1, day);
@@ -615,13 +615,25 @@ export default function Home() {
           </button>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-          <div>
-            <h1 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>
-              Agenda Avocado Spa {especialistaSeleccionada ? `- ${especialistaSeleccionada.toUpperCase()}` : ''}
-            </h1>
-            <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Horario de atención: Martes a Sábado, 9:00 AM - 5:00 PM</p>
+        {/* Header Agenda Ikigai con Logo */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ position: 'relative', width: '56px', height: '56px', borderRadius: '50%', overflow: 'hidden', border: '1px solid #e2e8f0', flexShrink: 0 }}>
+              <Image
+                src="/logo-ikigai.jpeg"
+                alt="Ikigai Logo"
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div>
+              <h1 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>
+                Agenda Ikigai {especialistaSeleccionada ? `- ${especialistaSeleccionada.toUpperCase()}` : ''}
+              </h1>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Horario de atención: Martes a Sábado, 9:00 AM - 5:00 PM</p>
+            </div>
           </div>
+
           <button
             onClick={handleAbrirModalCita}
             style={{ backgroundColor: '#65a30d', color: '#ffffff', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 600, cursor: 'pointer', border: 'none' }}
@@ -925,8 +937,8 @@ export default function Home() {
                             required
                           />
                           <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '0.5rem', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
-                            <button type="button" onClick={() => setEditingCita(null)} style={{ padding: '0.3rem 0.6rem', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>Cancelar</button>
-                            <button type="submit" style={{ padding: '0.3rem 0.6rem', backgroundColor: '#22c55e', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>Guardar Cambios</button>
+                            <button type="button" onClick={() => setEditingCita(null)} style={{ padding: '0.35rem 0.6rem', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>Cancelar</button>
+                            <button type="submit" style={{ padding: '0.35rem 0.6rem', backgroundColor: '#22c55e', color: '#fff', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>Guardar Cambios</button>
                           </div>
                         </form>
                       </div>
