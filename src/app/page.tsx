@@ -898,4 +898,276 @@ export default function Home() {
                   </button>
                   <button
                     onClick={() => setAdminTab('especialistas')}
-                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 700, cursor: 'pointer', borderBottom: adminTab === 'especialistas' ? '
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 700, cursor: 'pointer', borderBottom: adminTab === 'especialistas' ? '3px solid #8b5cf6' : 'transparent', color: adminTab === 'especialistas' ? '#8b5cf6' : '#6b21a8' }}
+                  >
+                    💅 Especialistas ({especialistas.length})
+                  </button>
+                  <button
+                    onClick={() => setAdminTab('servicios')}
+                    style={{ padding: '0.5rem 1rem', border: 'none', background: 'none', fontWeight: 700, cursor: 'pointer', borderBottom: adminTab === 'servicios' ? '3px solid #8b5cf6' : 'transparent', color: adminTab === 'servicios' ? '#8b5cf6' : '#6b21a8' }}
+                  >
+                    ✨ Servicios ({servicios.length})
+                  </button>
+                </div>
+
+                {/* TAB CITAS */}
+                {adminTab === 'citas' && (
+                  <div>
+                    {editingCita && (
+                      <div style={{ backgroundColor: '#fcf8ff', border: '1px solid #e9d5ff', padding: '0.85rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                        <h4 style={{ margin: '0 0 0.5rem 0', color: '#581c87', fontSize: '0.9rem' }}>Modificar Cita ID #{editingCita.id}</h4>
+                        <form onSubmit={handleGuardarModificacionCita} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.5rem' }}>
+                          <input
+                            type="text"
+                            placeholder="Cliente"
+                            value={editingCita.cliente_nombre}
+                            onChange={(e) => setEditingCita({ ...editingCita, cliente_nombre: e.target.value })}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
+                            required
+                          />
+                          <input
+                            type="text"
+                            placeholder="Teléfono"
+                            value={editingCita.cliente_telefono}
+                            onChange={(e) => setEditingCita({ ...editingCita, cliente_telefono: e.target.value })}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
+                            required
+                          />
+                          <select
+                            value={editingCita.manicurista_nombre}
+                            onChange={(e) => setEditingCita({ ...editingCita, manicurista_nombre: e.target.value })}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem', backgroundColor: '#fff' }}
+                          >
+                            {especialistas.map((esp) => (
+                              <option key={esp.id} value={esp.nombre}>{esp.nombre}</option>
+                            ))}
+                          </select>
+                          <select
+                            value={editingCita.servicio_nombre}
+                            onChange={(e) => setEditingCita({ ...editingCita, servicio_nombre: e.target.value })}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem', backgroundColor: '#fff' }}
+                          >
+                            {servicios.map((s) => (
+                              <option key={s.id} value={s.nombre}>{s.nombre}</option>
+                            ))}
+                          </select>
+                          <input
+                            type="date"
+                            value={editingCita.fecha}
+                            onChange={(e) => setEditingCita({ ...editingCita, fecha: e.target.value })}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
+                            required
+                          />
+                          <input
+                            type="time"
+                            value={editingCita.hora_inicio}
+                            min="09:00"
+                            max="17:00"
+                            onChange={(e) => setEditingCita({ ...editingCita, hora_inicio: e.target.value })}
+                            style={{ padding: '0.4rem', border: '1px solid #e9d5ff', borderRadius: '0.375rem' }}
+                            required
+                          />
+                          <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '0.5rem', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
+                            <button type="button" onClick={() => setEditingCita(null)} style={{ padding: '0.35rem 0.75rem', backgroundColor: '#f3e8ff', color: '#6b21a8', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}>Cancelar</button>
+                            <button type="submit" style={{ padding: '0.35rem 0.75rem', backgroundColor: '#8b5cf6', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontWeight: 600 }}>Guardar Cambios</button>
+                          </div>
+                        </form>
+                      </div>
+                    )}
+
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem', textAlign: 'left' }}>
+                        <thead>
+                          <tr style={{ backgroundColor: '#fcf8ff', borderBottom: '1px solid #f3e8ff' }}>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Fecha</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Hora</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Cliente</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Especialista</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Servicio</th>
+                            <th style={{ padding: '0.6rem', color: '#581c87' }}>Acciones Rápidas</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {citasFiltradas.length === 0 ? (
+                            <tr>
+                              <td colSpan={6} style={{ padding: '1rem', textAlign: 'center', color: '#7c3aed' }}>No hay citas registradas.</td>
+                            </tr>
+                          ) : (
+                            citasFiltradas.map((cita) => (
+                              <tr key={cita.id} style={{ borderBottom: '1px solid #fcf8ff' }}>
+                                <td style={{ padding: '0.6rem' }}>{cita.fecha}</td>
+                                <td style={{ padding: '0.6rem' }}>{cita.hora_inicio} - {cita.hora_fin}</td>
+                                <td style={{ padding: '0.6rem' }}><strong>{cita.cliente_nombre}</strong><br/><span style={{ color: '#7c3aed', opacity: 0.85 }}>{cita.cliente_telefono}</span></td>
+                                <td style={{ padding: '0.6rem' }}>{cita.manicurista_nombre}</td>
+                                <td style={{ padding: '0.6rem' }}>{cita.servicio_nombre}</td>
+                                <td style={{ padding: '0.6rem' }}>
+                                  <div style={{ display: 'flex', gap: '0.3rem', flexWrap: 'wrap' }}>
+                                    <button
+                                      onClick={() => {
+                                        const urlCliente = generarLinkWhatsApp(cita.cliente_telefono, msgConfirmacionCliente(cita));
+                                        window.open(urlCliente, '_blank');
+                                      }}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#25D366', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}
+                                    >
+                                      💬 WhatsApp
+                                    </button>
+                                    <button
+                                      onClick={() => setEditingCita(cita)}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#8b5cf6', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                    >
+                                      ✏️ Cambiar
+                                    </button>
+                                    <button
+                                      onClick={() => handleLiberarCita(cita.id)}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#ea580c', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                    >
+                                      🔓 Liberar
+                                    </button>
+                                    <button
+                                      onClick={() => handleEliminarCita(cita.id)}
+                                      style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                                    >
+                                      🗑️ Eliminar
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* TAB ESPECIALISTAS */}
+                {adminTab === 'especialistas' && (
+                  <div>
+                    <form onSubmit={handleAgregarEspecialista} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                      <input
+                        type="text"
+                        placeholder="Nombre de nueva especialista"
+                        value={nuevoEspNombre}
+                        onChange={(e) => setNuevoEspNombre(e.target.value)}
+                        style={{ flex: 1, padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
+                        required
+                      />
+                      <button
+                        type="submit"
+                        style={{ padding: '0.55rem 1rem', backgroundColor: '#8b5cf6', color: '#fff', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
+                      >
+                        + Agregar
+                      </button>
+                    </form>
+
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+                      <thead>
+                        <tr style={{ backgroundColor: '#fcf8ff', borderBottom: '1px solid #f3e8ff', textAlign: 'left' }}>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>ID</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Nombre</th>
+                          <th style={{ padding: '0.6rem', textAlign: 'right', color: '#581c87' }}>Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {especialistas.map((esp) => (
+                          <tr key={esp.id} style={{ borderBottom: '1px solid #fcf8ff' }}>
+                            <td style={{ padding: '0.6rem' }}>#{esp.id}</td>
+                            <td style={{ padding: '0.6rem', fontWeight: 600 }}>{esp.nombre}</td>
+                            <td style={{ padding: '0.6rem', textAlign: 'right' }}>
+                              <button
+                                onClick={() => handleEliminarEspecialista(esp.id)}
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                              >
+                                🗑️ Eliminar
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* TAB SERVICIOS */}
+                {adminTab === 'servicios' && (
+                  <div>
+                    <form onSubmit={handleAgregarServicio} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr auto', gap: '0.5rem', marginBottom: '1rem' }}>
+                      <input
+                        type="text"
+                        placeholder="Nombre del servicio"
+                        value={nuevoServNombre}
+                        onChange={(e) => setNuevoServNombre(e.target.value)}
+                        style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
+                        required
+                      />
+                      <input
+                        type="number"
+                        placeholder="Duración (min)"
+                        value={nuevoServDuracion}
+                        onChange={(e) => setNuevoServDuracion(Number(e.target.value))}
+                        style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
+                        required
+                      />
+                      <input
+                        type="number"
+                        step="0.01"
+                        placeholder="Precio ($)"
+                        value={nuevoServPrecio}
+                        onChange={(e) => setNuevoServPrecio(e.target.value)}
+                        style={{ padding: '0.55rem', border: '1px solid #e9d5ff', borderRadius: '0.5rem', fontSize: '0.85rem' }}
+                      />
+                      <button
+                        type="submit"
+                        style={{ padding: '0.55rem 1rem', backgroundColor: '#8b5cf6', color: '#fff', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}
+                      >
+                        + Agregar
+                      </button>
+                    </form>
+
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+                      <thead>
+                        <tr style={{ backgroundColor: '#fcf8ff', borderBottom: '1px solid #f3e8ff', textAlign: 'left' }}>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>ID</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Servicio</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Duración</th>
+                          <th style={{ padding: '0.6rem', color: '#581c87' }}>Precio</th>
+                          <th style={{ padding: '0.6rem', textAlign: 'right', color: '#581c87' }}>Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {servicios.map((s) => (
+                          <tr key={s.id} style={{ borderBottom: '1px solid #fcf8ff' }}>
+                            <td style={{ padding: '0.6rem' }}>#{s.id}</td>
+                            <td style={{ padding: '0.6rem', fontWeight: 600 }}>{s.nombre}</td>
+                            <td style={{ padding: '0.6rem' }}>{s.duracion_minutos} min</td>
+                            <td style={{ padding: '0.6rem' }}>${s.precio ?? 0}</td>
+                            <td style={{ padding: '0.6rem', textAlign: 'right' }}>
+                              <button
+                                onClick={() => handleEliminarServicio(s.id)}
+                                style={{ padding: '0.25rem 0.5rem', backgroundColor: '#f43f5e', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', fontSize: '0.75rem' }}
+                              >
+                                🗑️ Eliminar
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL REPORTE SEMANAL */}
+      <ReporteSemanalModal
+        isOpen={reporteModalOpen}
+        onClose={() => setReporteModalOpen(false)}
+        citas={citasList}
+        servicios={servicios}
+      />
+    </main>
+  );
+}
