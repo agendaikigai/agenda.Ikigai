@@ -4,14 +4,14 @@ import { createClient } from '@supabase/supabase-js';
 const getSupabaseCredentials = () => {
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    'https://rxpqidiyjmlltpfmukru.supabase.co';
+    'https://bfphnddoayzbmgayizah.supabase.co';
   const key =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4cHFpZGl5am1sbHRwZm11a3J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyOTg2MTMsImV4cCI6MjEwNDg3NDYxM30.XbfIWepWMiYyCAclPgxpRaQIMeNkl14qTQpfGvcyJxk';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmcGhuZGRvYXl6Ym1nYXlpemFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0NTg4NjQsImV4cCI6MjEwNzAzNDg2NH0.3X3j4SFtGOL0Yeyh4l6eoc4udwBNrlBoDiPSA4Q9l3w';
 
   const validUrl = url.startsWith('http')
     ? url
-    : 'https://rxpqidiyjmlltpfmukru.supabase.co';
+    : 'https://bfphnddoayzbmgayizah.supabase.co';
 
   return { validUrl, key };
 };
