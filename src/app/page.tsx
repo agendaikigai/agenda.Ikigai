@@ -715,7 +715,7 @@ export default function Home() {
               <h1 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#4c1d95', margin: 0, letterSpacing: '-0.02em' }}>
                 Agenda Ikigai {especialistaSeleccionada ? `- ${especialistaSeleccionada.toUpperCase()}` : ''}
               </h1>
-              <p style={{ margin: 0, fontSize: '0.82rem', color: '#7c3aed', opacity: 0.85 }}>Horario de atención de Lunes a Sábado, 9:00 AM - 5:00 PM</p>
+              <p style={{ margin: 0, fontSize: '0.82rem', color: '#7c3aed', opacity: 0.85 }}>Horario de atención de Lunes a Sábado, 9:00 AM - 11:00 PM</p>
             </div>
           </div>
 
