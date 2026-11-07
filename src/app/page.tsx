@@ -191,7 +191,7 @@ export default function Home() {
     }
   };
 
-  // Validar restricciones de horario y días (Lunes a Sábado, 9:00 AM a 5:00 PM)
+  // Validar restricciones de horario y días (Lunes a Sábado, 9:00 AM a 11:00 PM)
   const validarHorarioYDia = (fechaStr: string, horaInicioStr: string, duracionMinutos: number) => {
     const [year, month, day] = fechaStr.split('-').map(Number);
     const dateObj = new Date(year, month - 1, day);
@@ -207,10 +207,10 @@ export default function Home() {
     const endMin = startMin + duracionMinutos;
 
     const limiteInicioMin = 9 * 60;
-    const limiteFinMin = 18 * 60;
+    const limiteFinMin = 23 * 60;
 
     if (startMin < limiteInicioMin || endMin > limiteFinMin) {
-      alert('⚠️ El horario permitido de atención es de 9:00 AM a 6:00 PM. Por favor selecciona un horario adecuado.');
+      alert('⚠️ El horario permitido de atención es de 9:00 AM a 11:00 PM. Por favor selecciona un horario adecuado.');
       return false;
     }
 
@@ -760,7 +760,7 @@ export default function Home() {
               timeGridWeek: 'Semana'
             }}
             slotMinTime="09:00:00"
-            slotMaxTime="18:00:00"
+            slotMaxTime="23:00:00"
             allDaySlot={false}
             events={eventsFiltrados}
             eventContent={(eventInfo: any) => {
@@ -795,7 +795,7 @@ export default function Home() {
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(243, 232, 255, 0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem', zIndex: 9999 }}>
           <div style={{ backgroundColor: '#ffffff', padding: '1.5rem', borderRadius: '1rem', maxWidth: '420px', width: '100%', boxShadow: '0 20px 25px -5px rgba(139, 92, 246, 0.15)', border: '1px solid #f3e8ff' }}>
             <h2 style={{ fontSize: '1.15rem', fontWeight: 'bold', marginBottom: '0.25rem', color: '#4c1d95' }}>Agendar Nueva Cita</h2>
-            <p style={{ fontSize: '0.78rem', color: '#7c3aed', marginBottom: '1.25rem', opacity: 0.85 }}>Horario: Lunes a Sábado (9:00 AM - 6:00 PM)</p>
+            <p style={{ fontSize: '0.78rem', color: '#7c3aed', marginBottom: '1.25rem', opacity: 0.85 }}>Horario: Lunes a Sábado (9:00 AM - 11:00 PM)</p>
             
             <form onSubmit={handleSubmitCita} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               <div>
@@ -859,7 +859,7 @@ export default function Home() {
                     type="time"
                     required
                     min="09:00"
-                    max="17:00"
+                    max="23:00"
                     value={formData.hora_inicio}
                     onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
                     style={{ width: '100%', border: '1px solid #e9d5ff', padding: '0.55rem', borderRadius: '0.5rem', fontSize: '0.875rem', boxSizing: 'border-box', outlineColor: '#8b5cf6' }}
